@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Input from "../inputs/Input";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Heading from "../Heading";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineGoogle } from "react-icons/ai";
@@ -10,8 +10,13 @@ import Button from "../Button";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { SafeUser } from "@/types";
 
-const LoginForm = () => {
+interface LoginFormProps {
+  currentUser: SafeUser | null;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -43,13 +48,22 @@ const LoginForm = () => {
       }
     });
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      router.push("/");
+      router.refresh();
+    }
+  }, [router, currentUser]);
   return (
     <Fragment>
       <Heading title="Sign in for E-shop" />
       <Button
         label="Sign in with google"
         icon={AiOutlineGoogle}
-        onClick={() => {}}
+        onClick={() => {
+          signIn("google");
+        }}
         outline
       />
       <hr className="bg-slate-300 w-full" />

@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -11,8 +11,13 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { SafeUser } from "@/types";
 
-const RegisterForm = () => {
+interface RegisterFormProps {
+  currentUser: SafeUser | null;
+}
+
+const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -52,7 +57,12 @@ const RegisterForm = () => {
       .catch(() => toast.error("Something went wrong"))
       .finally(() => setIsLoading(false));
   };
-
+  useEffect(() => {
+    if (currentUser) {
+      router.push("/");
+      router.refresh();
+    }
+  }, [router, currentUser]);
   // Kingsuk kingsuk@gmail.com kingsuk990
   return (
     <Fragment>
@@ -60,7 +70,9 @@ const RegisterForm = () => {
       <Button
         label="Sign up with google"
         icon={AiOutlineGoogle}
-        onClick={() => {}}
+        onClick={() => {
+          signIn("google");
+        }}
         outline
       />
       <hr className="bg-slate-300 w-full" />

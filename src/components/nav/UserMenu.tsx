@@ -43,7 +43,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                 <MenuItem
                   onClick={() => {
                     toggleOpen();
-                    signOut();
+                    signOut({ redirect: false });
                   }}
                 >
                   Log out
