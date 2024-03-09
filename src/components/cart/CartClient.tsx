@@ -7,8 +7,21 @@ import Heading from "../Heading";
 import Button from "../Button";
 import ItemContent from "./ItemContent";
 import { formatPrice } from "@/utils/formatPrice";
+import { SafeUser } from "@/types";
+import { useRouter } from "next/navigation";
 
-const CartClient = () => {
+interface CartClientProps {
+  currentUser: SafeUser | null;
+}
+
+const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
+  const router = useRouter();
+
+  if (!currentUser) {
+    router.push("/login");
+    router.refresh();
+  }
+
   const { cartProducts, handleClearCart, cartTotalAmount } = useCart();
 
   if (!cartProducts || cartProducts.length === 0) {
@@ -58,13 +71,18 @@ const CartClient = () => {
             <span>SubTotal</span>
             <span>{formatPrice(cartTotalAmount)}</span>
           </div>
-
           <p className="text-slate-500">
             Tex and shipping calculate at checkout
           </p>
-          <Button label="Checkout" onClick={() => {}} />
+
+          <Button
+            label="Checkout"
+            onClick={() => {
+              router.push("/checkout");
+            }}
+          />
           <Link
-            href="/"
+            href="/checkout"
             className="text-slate-500 flex items-center gap-1 mt-2"
           >
             <MdArrowBack />
