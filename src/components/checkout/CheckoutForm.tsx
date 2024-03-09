@@ -50,7 +50,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
         redirect: "if_required",
       })
       .then((result) => {
-        console.log(result);
         if (!result.error) {
           toast.success("checkout success");
 
@@ -70,7 +69,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
       <AddressElement
         options={{
           mode: "shipping",
-          allowedCountries: ["IN"],
+          allowedCountries: ["india"],
         }}
       />
       <h2 className="font-semibold mt-4 mb-2">Payment Information</h2>

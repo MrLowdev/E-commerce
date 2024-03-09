@@ -14,7 +14,7 @@ interface CheckoutClientProps {
   currentUser: SafeUser | null;
 }
 const stripePromise = loadStripe(
-  "pk_test_51OsIQ2SFAjld4jhjFa5vsJeAJ6ITcNaSghdKL79rrKSDYgRyOzuywFKbZHAcTYyhOJAvozwkbZ9rfi4QksXQa2vx00VwNXxBDq"
+  "pk_test_51OsPxVBQjZ6nTRNniedPofEpOWGaZM6oyLlKTWwOv7TlUcu92wR1a5E65EISnlieNxLdZ685iNA4IKvSAE1I1xhQ00I7nb12xh"
 );
 
 const CheckoutClient: React.FC<CheckoutClientProps> = ({ currentUser }) => {

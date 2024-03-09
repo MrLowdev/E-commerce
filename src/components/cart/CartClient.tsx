@@ -17,11 +17,6 @@ interface CartClientProps {
 const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
   const router = useRouter();
 
-  if (!currentUser) {
-    router.push("/login");
-    router.refresh();
-  }
-
   const { cartProducts, handleClearCart, cartTotalAmount } = useCart();
 
   if (!cartProducts || cartProducts.length === 0) {
@@ -76,9 +71,10 @@ const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
           </p>
 
           <Button
-            label="Checkout"
+            label={currentUser ? "Checkout" : "Login"}
+            outline={currentUser ? false : true}
             onClick={() => {
-              router.push("/checkout");
+              currentUser ? router.push("/checkout") : router.push("/login");
             }}
           />
           <Link
