@@ -18,8 +18,6 @@ export default async function getProductById(params: IParams) {
       },
     });
 
-    console.log(products);
-
     if (!products) {
       return null;
     }
