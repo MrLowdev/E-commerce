@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { CartProductType } from "@/components/products/ProductDetails";
 import {
   createContext,
@@ -127,10 +128,13 @@ export const CartContextProvider = (props: Props) => {
     localStorage.setItem("eShopCartItem", JSON.stringify(null));
   }, []);
 
-  const handleEShopPaymentIntent = useCallback((val: string | null) => {
-    setPaymentIntent(val);
-    localStorage.setItem("eShopPaymentsIntent", JSON.stringify(val));
-  }, []);
+  const handleEShopPaymentIntent = useCallback(
+    (val: string | null) => {
+      setPaymentIntent(val);
+      localStorage.setItem("eShopPaymentsIntent", JSON.stringify(val));
+    },
+    [paymentIntent]
+  );
 
   const value = {
     cartTotalQty,

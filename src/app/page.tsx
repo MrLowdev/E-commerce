@@ -4,6 +4,8 @@ import HomeBanner from "@/components/HomeBanner";
 import NullData from "@/components/NullData";
 import ProductCart from "@/components/products/ProductCart";
 
+export const dynamic = "force-dynamic";
+
 interface HomeProps {
   searchParams: IProductsParams;
 }

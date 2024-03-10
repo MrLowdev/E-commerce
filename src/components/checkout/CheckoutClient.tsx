@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useCart } from "@/hooks/useCart";
@@ -25,11 +26,11 @@ const CheckoutClient: React.FC<CheckoutClientProps> = ({ currentUser }) => {
   const [clientSecret, setClientSecret] = useState<string>("");
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
-  if (!currentUser) {
-    router.push("/login");
-    router.refresh();
-  }
   useEffect(() => {
+    if (!currentUser) {
+      router.push("/login");
+      router.refresh();
+    }
     if (cartProducts) {
       setLoading(true);
       setError(false);
@@ -57,7 +58,7 @@ const CheckoutClient: React.FC<CheckoutClientProps> = ({ currentUser }) => {
           toast.error("Something went wrong");
         });
     }
-  }, [cartProducts, handleEShopPaymentIntent, paymentIntent, router]);
+  }, [cartProducts, paymentIntent]);
 
   const options: StripeElementsOptions = {
     clientSecret,

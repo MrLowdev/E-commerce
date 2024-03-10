@@ -5,6 +5,7 @@ import Navbar from "@/components/nav/Navbar";
 import Footer from "@/components/footer/Footer";
 import CartProvider from "@/provider/CartProvider";
 import { Toaster } from "react-hot-toast";
+import { Suspense } from "react";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -24,7 +25,9 @@ export default async function RootLayout({
         <Toaster />
         <CartProvider>
           <div className="flex flex-col min-h-screen">
-            <Navbar />
+            <Suspense>
+              <Navbar />
+            </Suspense>
             <main className="flex-grow">{children}</main>
             <Footer />
           </div>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useCart } from "@/hooks/useCart";
@@ -36,7 +37,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
       return;
     }
     handlePaymentSuccess(false);
-  }, [clientSecret, handlePaymentSuccess, stripe]);
+  }, [stripe]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
