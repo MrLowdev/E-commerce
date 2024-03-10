@@ -1,0 +1,19 @@
+import prisma from "@/utils/prisma.config";
+
+export default async function getOrdersByUserId(userId: string) {
+  try {
+    const orders = await prisma.order.findMany({
+      include: {
+        user: true,
+      },
+      orderBy: {
+        createdDate: "desc",
+      },
+      where: { userId },
+    });
+
+    return orders;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}

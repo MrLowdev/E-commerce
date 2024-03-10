@@ -12,13 +12,10 @@ import {
   MdRemoveRedEye,
 } from "react-icons/md";
 import ActionBtn from "@/components/ActionBtn";
-import { useCallback } from "react";
-import axios from "axios";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import moment from "moment";
 
-interface ManageOrdersClientProps {
+interface OrdersClientProps {
   orders: ExtendedOrders[];
 }
 
@@ -26,7 +23,7 @@ type ExtendedOrders = Order & {
   user: User;
 };
 
-const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
+const OrdersClient: React.FC<OrdersClientProps> = ({ orders }) => {
   const router = useRouter();
 
   let rows: any = [];
@@ -130,18 +127,6 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
           <div className="flex justify-between gap-4 w-full ">
             <ActionBtn
               onClick={() => {
-                handleDispatch(params.row.id);
-              }}
-              icon={MdDeliveryDining}
-            />
-            <ActionBtn
-              onClick={() => {
-                handleDelivery(params.row.id);
-              }}
-              icon={MdDone}
-            />
-            <ActionBtn
-              onClick={() => {
                 router.push(`/order/${params.row.id}`);
               }}
               icon={MdRemoveRedEye}
@@ -151,38 +136,6 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
       },
     },
   ];
-
-  const handleDispatch = useCallback(
-    (id: string) => {
-      axios
-        .put("/api/order", {
-          id,
-          deliveryStatus: "dispatched",
-        })
-        .then(() => {
-          toast.success("Product status change");
-          router.refresh();
-        })
-        .catch((error) => toast.error("Something wrong"));
-    },
-    [router]
-  );
-
-  const handleDelivery = useCallback(
-    (id: string) => {
-      axios
-        .put("/api/order", {
-          id,
-          deliveryStatus: "delivered",
-        })
-        .then(() => {
-          toast.success("Product status change");
-          router.refresh();
-        })
-        .catch((error) => toast.error("Something wrong"));
-    },
-    [router]
-  );
   return (
     <div className="max-w-[1150px] m-auto text-xl">
       <div className="mb-4 mt-8">
@@ -207,4 +160,4 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
   );
 };
 
-export default ManageOrdersClient;
+export default OrdersClient;
