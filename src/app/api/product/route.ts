@@ -30,3 +30,25 @@ export async function POST(request: NextRequest) {
     return NextResponse.json("Internal server issue");
   }
 }
+
+export async function PUT(request: NextRequest) {
+  try {
+    const currentUser = await getCurrentUser();
+
+    if (!currentUser || currentUser?.role !== "ADMIN") {
+      return NextResponse.error();
+    }
+    const body = await request.json();
+    const { id, inStock } = body;
+
+    const product = await prisma.product.update({
+      where: { id },
+      data: { inStock },
+    });
+
+    return NextResponse.json(product, { status: 200 });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json("Internal server issue");
+  }
+}
