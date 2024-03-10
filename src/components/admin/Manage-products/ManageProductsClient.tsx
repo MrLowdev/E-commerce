@@ -64,7 +64,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
     {
       field: "inStock",
       headerName: "In Stock",
-      width: 120,
+      width: 100,
       renderCell: (params) => {
         return (
           <div>
