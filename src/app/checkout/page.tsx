@@ -10,7 +10,10 @@ const Checkout = async () => {
     <div className="p-8 ">
       <Container>
         <FormWrap>
-          <CheckoutClient currentUser={currentUser} />
+          <CheckoutClient
+            currentUser={currentUser}
+            PublicKey={process.env.STRIPE_PUBLIC_KEY as string}
+          />
         </FormWrap>
       </Container>
     </div>

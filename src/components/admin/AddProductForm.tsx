@@ -137,26 +137,30 @@ const AddProductForm = () => {
     };
 
     await handleImageUploads();
-    const productDate = {
-      ...data,
-      images: uploadImages,
-      price: parseFloat(data.price),
-    };
+    if (uploadImages) {
+      const productDate = {
+        ...data,
+        images: uploadImages,
+        price: parseFloat(data.price),
+      };
 
-    axios
-      .post("/api/product", productDate)
-      .then(() => {
-        toast.success("Product created"), setIsProductCreated(true);
-        reset();
-        router.refresh();
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        toast.error("SomethingWent wrong");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      axios
+        .post("/api/product", productDate)
+        .then(() => {
+          toast.success("Product created"), setIsProductCreated(true);
+          reset();
+          router.refresh();
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          toast.error("SomethingWent wrong");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      toast.error("Woo hoo! You forgot to select image");
+    }
   };
 
   const category = watch("category");
