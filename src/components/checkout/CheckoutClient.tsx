@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-
 import { useCart } from "@/hooks/useCart";
 import { SafeUser } from "@/types";
 import { useRouter } from "next/navigation";
@@ -10,15 +9,16 @@ import { StripeElementsOptions, loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import Button from "../Button";
-
 interface CheckoutClientProps {
   currentUser: SafeUser | null;
+  PublicKey: string;
 }
-const stripePromise = loadStripe(
-  "pk_test_51OsPxVBQjZ6nTRNniedPofEpOWGaZM6oyLlKTWwOv7TlUcu92wR1a5E65EISnlieNxLdZ685iNA4IKvSAE1I1xhQ00I7nb12xh"
-);
 
-const CheckoutClient: React.FC<CheckoutClientProps> = ({ currentUser }) => {
+const CheckoutClient: React.FC<CheckoutClientProps> = ({
+  currentUser,
+  PublicKey,
+}) => {
+  const stripePromise = loadStripe(PublicKey);
   const router = useRouter();
   const { cartProducts, paymentIntent, handleEShopPaymentIntent } = useCart();
   const [loading, setLoading] = useState(false);
